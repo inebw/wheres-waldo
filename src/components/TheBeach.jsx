@@ -1,0 +1,36 @@
+import beachImg from "./../../src/assets/the-beach.jpg";
+import { useRef } from "react";
+
+export default function TheBeach() {
+  const imgRef = useRef(null);
+  const isWally = (x, y) => {
+    if (x > 1727.31 && x < 1754.52 && y > 605.95 && y < 616.53) return true;
+    return false;
+  };
+  const clickHandler = (event) => {
+    const img = imgRef.current;
+
+    const rect = img.getBoundingClientRect();
+
+    const scaleX = img.naturalWidth / rect.width;
+    const scaleY = img.naturalHeight / rect.height;
+
+    const x = (event.clientX - rect.left) * scaleX;
+    const y = (event.clientY - rect.top) * scaleY;
+    console.log(x, y);
+    console.log(isWally(x, y));
+  };
+
+  return (
+    <div>
+      <h1>The Beach</h1>
+      <img
+        ref={imgRef}
+        className="game-img"
+        src={beachImg}
+        alt=""
+        onClick={clickHandler}
+      />
+    </div>
+  );
+}
