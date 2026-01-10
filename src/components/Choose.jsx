@@ -1,12 +1,13 @@
 import { useState } from "react";
 import TheBeach from "./TheBeach";
 import useFetchSettings from "../helper/useFetchSettings";
+import Game from "./Game";
 
 export default function Choose() {
   const [id, setId] = useState(0);
   const { error, loading, settings } = useFetchSettings();
 
-  if (id !== 0) return <TheBeach id={id} />;
+  if (id !== 0) return <Game id={id} />;
 
   if (loading) return <p>Loading ...</p>;
 
