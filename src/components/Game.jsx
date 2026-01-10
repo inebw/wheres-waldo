@@ -46,7 +46,13 @@ export default function Game({ id }) {
 
     const x = (event.clientX - rect.left) * scaleX;
     const y = (event.clientY - rect.top) * scaleY;
-    setPos([event.clientX, event.clientY]);
+    console.log(event.clientX, event.clientY);
+    console.log(rect.right, rect.bottom);
+    let xPos = event.clientX;
+    let yPos = event.clientY;
+    if (rect.right - xPos <= 150) xPos -= 150;
+    if (rect.bottom - yPos <= 250) yPos -= 250;
+    setPos([xPos, yPos]);
     setSel([x, y]);
     toggleCharClass();
   };
