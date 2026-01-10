@@ -5,3 +5,16 @@
 .choose-img {
   width: 300px;
 }
+
+.char-img {
+  width: 25px;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+  background-color: white;
+}

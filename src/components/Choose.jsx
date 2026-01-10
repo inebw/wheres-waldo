@@ -1,5 +1,4 @@
 import { useState } from "react";
-import TheBeach from "./TheBeach";
 import useFetchSettings from "../helper/useFetchSettings";
 import Game from "./Game";
 

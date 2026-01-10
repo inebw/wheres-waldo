@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./App.css";
-import TheBeach from "./components/TheBeach";
 import Choose from "./components/Choose";
 
 function App() {
