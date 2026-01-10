@@ -1,7 +1,9 @@
-import beachImg from "./../../src/assets/the-beach.jpg";
 import { useRef } from "react";
+import useFetchSettings from "../helper/useFetchSettings";
 
-export default function TheBeach() {
+export default function TheBeach({ id }) {
+  const { loading, error, settings } = useFetchSettings(id);
+
   const imgRef = useRef(null);
   const isWally = (x, y) => {
     if (x > 1727.31 && x < 1754.52 && y > 605.95 && y < 616.53) return true;
@@ -21,13 +23,17 @@ export default function TheBeach() {
     console.log(isWally(x, y));
   };
 
+  if (loading) return <p>Loading...</p>;
+
+  if (error) return <p>{error.message}</p>;
+
   return (
     <div>
       <h1>The Beach</h1>
       <img
         ref={imgRef}
         className="game-img"
-        src={beachImg}
+        src={settings.img}
         alt=""
         onClick={clickHandler}
       />
