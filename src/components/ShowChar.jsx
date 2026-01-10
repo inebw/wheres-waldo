@@ -1,8 +1,16 @@
-export default function ShowChar({ sel, chars, pos, className, cords }) {
+export default function ShowChar({
+  increaseChoice,
+  sel,
+  chars,
+  pos,
+  className,
+  cords,
+}) {
   if (className == "hidden") return <div></div>;
   const clickHandler = (event, charId) => {
-    console.log(event.target, charId);
-    console.log(isChar(charId));
+    // console.log(event.target, charId);
+    // console.log(isChar(charId));
+    if (isChar(charId)) increaseChoice(charId);
   };
 
   const getCharCord = (charId) => {
@@ -29,7 +37,7 @@ export default function ShowChar({ sel, chars, pos, className, cords }) {
 
   return (
     <div
-      className={className}
+      className={className + "border flex-col gap-25 p-4 rounded-xs bg-white"}
       style={{
         position: "fixed",
         top: pos[1],
@@ -37,8 +45,11 @@ export default function ShowChar({ sel, chars, pos, className, cords }) {
       }}
     >
       {chars.map((char) => (
-        <div onClick={(e) => clickHandler(e, char.id)}>
-          <img className="char-img" src={char.img} alt="" />
+        <div
+          className="flex gap-5 p-2 cursor-pointer hover:outline-2"
+          onClick={(e) => clickHandler(e, char.id)}
+        >
+          <img className="w-6.25" src={char.img} alt="" />
           <p>{char.name}</p>
         </div>
       ))}

@@ -20,9 +20,13 @@ export default function Choose() {
     <div>
       <h2>Select your level</h2>
       {settings.map((setting) => (
-        <div className="setting" onClick={() => handleClick(setting.id)}>
-          <h3>{setting.name}</h3>
-          <img className="choose-img" src={setting.img} alt="" />
+        <div
+          key={setting.id}
+          className="setting"
+          onClick={() => handleClick(setting.id)}
+        >
+          <h3 className="text-3xl font-bold">{setting.name}</h3>
+          <img className="w-75" src={setting.img} alt="" />
         </div>
       ))}
     </div>
