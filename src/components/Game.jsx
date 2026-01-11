@@ -5,7 +5,7 @@ import ShowChar from "./ShowChar";
 import useFetchCords from "../helper/useFetchCords";
 import { useStopwatch } from "react-timer-hook";
 import TopScores from "./TopScores";
-import { useParams } from "react-router";
+import { useOutletContext, useParams } from "react-router";
 
 export default function Game() {
   const { id } = useParams();
@@ -19,6 +19,7 @@ export default function Game() {
   const [sel, setSel] = useState([0, 0]);
   const [charClass, setCharClass] = useState("hidden");
   const imgRef = useRef(null);
+  const [username, setUsername] = useOutletContext();
 
   const {
     totalSeconds,
@@ -32,25 +33,41 @@ export default function Game() {
 
   useEffect(() => {
     if (correctChoice === 3) {
-      setWon(true);
       pause();
+      postScore().then((res) => {
+        setWon(true);
+      });
     }
   }, [correctChoice]);
 
+  const postScore = async () => {
+    const data = {
+      username: username,
+      setting_id: id,
+      seconds: `${totalSeconds}.${totalMilliseconds}`,
+    };
+    const response = await fetch("http://localhost:3000/scores", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
+  };
+
   const increaseChoice = (charId) => {
-    console.log(charId);
     if (usedChars.has(charId)) return;
     const prevUsedChars = new Set(usedChars);
     prevUsedChars.add(charId);
     setUsedChars(prevUsedChars);
-    console.log(prevUsedChars.size);
     setCorrectChoice((prev) => prev + 1);
   };
 
   const toggleCharClass = () => {
-    const curClass = charClass;
     setCharClass(charClass === "hidden" ? "" : "hidden");
   };
+
   const clickHandler = (event) => {
     const img = imgRef.current;
 
@@ -84,11 +101,7 @@ export default function Game() {
       <p>
         {seconds}.{milliseconds} seconds
       </p>
-      {won && (
-        <p>
-          You won in {totalSeconds}.{totalMilliseconds} seconds
-        </p>
-      )}
+
       <img
         ref={imgRef}
         className="w-1/1"

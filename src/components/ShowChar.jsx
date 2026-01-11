@@ -9,10 +9,22 @@ export default function ShowChar({
   cords,
 }) {
   if (className == "hidden") return <div></div>;
+
   const clickHandler = (event, charId) => {
-    // console.log(event.target, charId);
-    // console.log(isChar(charId));
-    if (isChar(charId)) increaseChoice(charId);
+    const target = event.currentTarget;
+    if (isChar(charId)) {
+      increaseChoice(charId);
+    } else {
+      target.classList.add("outline-2", "outline-red-100", "animate-shake");
+      setTimeout((target) => {
+        console.log(target);
+        target.classList.remove(
+          "outline-2",
+          "outline-red-100",
+          "animate-shake",
+        );
+      }, 1000);
+    }
   };
 
   const getCharCord = (charId) => {
@@ -39,7 +51,9 @@ export default function ShowChar({
 
   return (
     <div
-      className={className + "border flex-col gap-25 p-4 rounded-xs bg-white"}
+      className={
+        className + "border flex flex-col gap-2 p-4 rounded-xs bg-white"
+      }
       style={{
         position: "fixed",
         top: pos[1],
