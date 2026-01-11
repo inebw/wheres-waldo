@@ -5,8 +5,10 @@ import ShowChar from "./ShowChar";
 import useFetchCords from "../helper/useFetchCords";
 import { useStopwatch } from "react-timer-hook";
 import TopScores from "./TopScores";
+import { useParams } from "react-router";
 
-export default function Game({ id }) {
+export default function Game() {
+  const { id } = useParams();
   const { loading, error, settings } = useFetchSettings(id);
   const { chars } = useFetchChars();
   const { cords } = useFetchCords(id);

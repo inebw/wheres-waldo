@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "./App.css";
-import Choose from "./components/Choose";
+import { Outlet } from "react-router";
 
 function App() {
+  const [username, setUsername] = useState("");
   return (
     <>
       <h1>Where's Waldo </h1>
-      <Choose />
+      <Outlet context={[username, setUsername]} />
     </>
   );
 }
