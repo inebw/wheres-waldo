@@ -3,6 +3,8 @@ import useFetchSettings from "../helper/useFetchSettings";
 import useFetchChars from "../helper/useFetchChars";
 import ShowChar from "./ShowChar";
 import useFetchCords from "../helper/useFetchCords";
+import { useStopwatch } from "react-timer-hook";
+import TopScores from "./TopScores";
 
 export default function Game({ id }) {
   const { loading, error, settings } = useFetchSettings(id);
@@ -16,11 +18,22 @@ export default function Game({ id }) {
   const [charClass, setCharClass] = useState("hidden");
   const imgRef = useRef(null);
 
-  useEffect(() => {
-    if (correctChoice === 3) setWon(true);
-  }, [correctChoice]);
+  const {
+    totalSeconds,
+    totalMilliseconds,
+    milliseconds,
+    seconds,
+    start,
+    pause,
+    reset,
+  } = useStopwatch({ autoStart: true, interval: 20 });
 
-  if (won) return <p>You have won the Game</p>;
+  useEffect(() => {
+    if (correctChoice === 3) {
+      setWon(true);
+      pause();
+    }
+  }, [correctChoice]);
 
   const increaseChoice = (charId) => {
     console.log(charId);
@@ -46,12 +59,12 @@ export default function Game({ id }) {
 
     const x = (event.clientX - rect.left) * scaleX;
     const y = (event.clientY - rect.top) * scaleY;
-    console.log(event.clientX, event.clientY);
-    console.log(rect.right, rect.bottom);
     let xPos = event.clientX;
     let yPos = event.clientY;
+
     if (rect.right - xPos <= 150) xPos -= 150;
     if (rect.bottom - yPos <= 250) yPos -= 250;
+
     setPos([xPos, yPos]);
     setSel([x, y]);
     toggleCharClass();
@@ -61,9 +74,19 @@ export default function Game({ id }) {
 
   if (error) return <p>{error.message}</p>;
 
+  if (won) return <TopScores />;
+
   return (
     <div>
       <h1>{settings.name}</h1>
+      <p>
+        {seconds}.{milliseconds} seconds
+      </p>
+      {won && (
+        <p>
+          You won in {totalSeconds}.{totalMilliseconds} seconds
+        </p>
+      )}
       <img
         ref={imgRef}
         className="w-1/1"
