@@ -8,6 +8,7 @@ import TopScores from "./TopScores";
 import { useOutletContext, useParams } from "react-router";
 import CharBoard from "./CharBoard";
 import useCharStyles from "../helper/useCharStyles";
+import Clock from "../assets/Clock";
 
 export default function Game() {
   const { id } = useParams();
@@ -23,7 +24,7 @@ export default function Game() {
   const imgRef = useRef(null);
   const [username, setUsername] = useOutletContext();
   const { styles, setCharStyles } = useCharStyles();
-  const [glowPos, setGlowPos] = useState([0, 0]);
+  const [scoreId, setScoreId] = useState(null);
 
   const {
     totalSeconds,
@@ -58,6 +59,9 @@ export default function Game() {
       body: JSON.stringify(data),
       credentials: "include",
     });
+    const score = await response.json();
+    console.log(score);
+    setScoreId(score.scoreId);
   };
 
   const increaseChoice = (charId) => {
@@ -85,8 +89,26 @@ export default function Game() {
     let xPos = event.clientX;
     let yPos = event.clientY;
 
-    if (rect.right - xPos <= 150) xPos -= 150;
-    if (rect.bottom - yPos <= 250) yPos -= 250;
+    const POPUP_WIDTH = 150;
+    const POPUP_HEIGHT = 250;
+    const MARGIN = 15;
+
+    const viewportW = window.innerWidth;
+    const viewportH = window.innerHeight;
+
+    // clamp right
+    if (xPos + POPUP_WIDTH > viewportW) {
+      xPos = viewportW - POPUP_WIDTH - MARGIN;
+    }
+
+    // clamp bottom
+    if (yPos + POPUP_HEIGHT > viewportH) {
+      yPos = viewportH - POPUP_HEIGHT - MARGIN;
+    }
+
+    // clamp left/top
+    xPos = Math.max(MARGIN, xPos);
+    yPos = Math.max(MARGIN, yPos);
 
     setPos([xPos, yPos]);
     setSel([x, y]);
@@ -97,17 +119,21 @@ export default function Game() {
 
   if (error) return <p>{error.message}</p>;
 
-  if (won) return <TopScores />;
+  if (won) return <>{scoreId && <TopScores scoreId={scoreId} />}</>;
 
   return (
     <div>
-      <div className="flex gap-2 justify-between shadow-lg p-2 m-2 ml-100 mr-100">
+      <div className="flex gap-2 justify-between items-center shadow-lg p-2 m-2 ml-100 mr-100">
         <h1 className="text-4xl font-bold">{settings.name}</h1>
-        <div>
-          <p>
-            {totalSeconds}.{milliseconds} seconds
+        <div className="flex flex-col gap-1 items-center justify-center border border-gray-400 rounded-md pl-5 pr-5 p-2 bg-green">
+          <div className="flex gap-2">
+            <Clock className="w-8 fill-dg" />
+            <p className="text-2xl">Time</p>
+          </div>
+          <p className="text-2xl">
+            {String(totalSeconds).padStart(3, 0)}.
+            {String(milliseconds).padStart(3, 0)}
           </p>
-          <p>{username}</p>
         </div>
       </div>
       {chars && (

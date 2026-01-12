@@ -5,7 +5,7 @@ export default function CharBoard({
   correctChoice,
 }) {
   return (
-    <div className="flex gap-2 justify-between shadow-lg p-2 m-2 ml-100 mr-100 items-center">
+    <div className="flex gap-2 justify-between shadow-lg p-2 m-2 ml-100 mr-100 items-center sticky top-1 bg-light-transparent">
       <div className="flex gap-2">
         {chars.map((char) => (
           <div key={char.id} className="flex gap-2 p-2">
