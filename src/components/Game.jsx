@@ -23,6 +23,7 @@ export default function Game() {
   const imgRef = useRef(null);
   const [username, setUsername] = useOutletContext();
   const { styles, setCharStyles } = useCharStyles();
+  const [glowPos, setGlowPos] = useState([0, 0]);
 
   const {
     totalSeconds,
@@ -117,13 +118,16 @@ export default function Game() {
           correctChoice={correctChoice}
         />
       )}
-      <img
-        ref={imgRef}
-        className="rounded-md w-1/1"
-        src={settings.img}
-        alt=""
-        onClick={clickHandler}
-      />
+      <div>
+        <img
+          ref={imgRef}
+          className="rounded-md w-1/1 cursor-[url('/glowCursor.png')_50_50,auto]"
+          src={settings.img}
+          alt=""
+          onClick={clickHandler}
+        />
+      </div>
+
       <ShowChar
         sel={sel}
         chars={chars}
