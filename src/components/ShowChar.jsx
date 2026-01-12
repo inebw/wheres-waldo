@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Check from "../assets/Check";
-import useCharStyles from "../helper/useCharStyles";
 
 export default function ShowChar({
   increaseChoice,
@@ -9,8 +8,9 @@ export default function ShowChar({
   pos,
   className,
   cords,
+  styles,
+  setCharStyles,
 }) {
-  const { styles, setCharStyles } = useCharStyles();
   if (className == "hidden") return <div></div>;
 
   const clickHandler = (event, charId) => {
@@ -24,7 +24,7 @@ export default function ShowChar({
   };
 
   const getCharCord = (charId) => {
-    const charCord = cords.find((cord) => cord.id == charId);
+    const charCord = cords.find((cord) => cord.char_id == charId);
     return [
       parseFloat(charCord.x_min),
       parseFloat(charCord.x_max),

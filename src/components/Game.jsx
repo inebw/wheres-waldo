@@ -6,6 +6,8 @@ import useFetchCords from "../helper/useFetchCords";
 import { useStopwatch } from "react-timer-hook";
 import TopScores from "./TopScores";
 import { useOutletContext, useParams } from "react-router";
+import CharBoard from "./CharBoard";
+import useCharStyles from "../helper/useCharStyles";
 
 export default function Game() {
   const { id } = useParams();
@@ -20,6 +22,7 @@ export default function Game() {
   const [charClass, setCharClass] = useState("hidden");
   const imgRef = useRef(null);
   const [username, setUsername] = useOutletContext();
+  const { styles, setCharStyles } = useCharStyles();
 
   const {
     totalSeconds,
@@ -44,7 +47,7 @@ export default function Game() {
     const data = {
       username: username,
       setting_id: id,
-      seconds: `${totalSeconds}.${totalMilliseconds}`,
+      seconds: `${totalSeconds}.${milliseconds}`,
     };
     const response = await fetch("http://localhost:3000/scores", {
       method: "POST",
@@ -97,14 +100,26 @@ export default function Game() {
 
   return (
     <div>
-      <h1>{settings.name}</h1>
-      <p>
-        {seconds}.{milliseconds} seconds
-      </p>
-
+      <div className="flex gap-2 justify-between shadow-lg p-2 m-2 ml-100 mr-100">
+        <h1 className="text-4xl font-bold">{settings.name}</h1>
+        <div>
+          <p>
+            {totalSeconds}.{milliseconds} seconds
+          </p>
+          <p>{username}</p>
+        </div>
+      </div>
+      {chars && (
+        <CharBoard
+          chars={chars}
+          styles={styles}
+          setCharStyles={setCharStyles}
+          correctChoice={correctChoice}
+        />
+      )}
       <img
         ref={imgRef}
-        className="w-1/1"
+        className="rounded-md w-1/1"
         src={settings.img}
         alt=""
         onClick={clickHandler}
@@ -116,6 +131,8 @@ export default function Game() {
         pos={pos}
         cords={cords}
         increaseChoice={increaseChoice}
+        styles={styles}
+        setCharStyles={setCharStyles}
       />
     </div>
   );
