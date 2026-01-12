@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Check from "../assets/Check";
+import useCharStyles from "../helper/useCharStyles";
 
 export default function ShowChar({
   increaseChoice,
@@ -8,22 +10,16 @@ export default function ShowChar({
   className,
   cords,
 }) {
+  const { styles, setCharStyles } = useCharStyles();
   if (className == "hidden") return <div></div>;
 
   const clickHandler = (event, charId) => {
     const target = event.currentTarget;
     if (isChar(charId)) {
       increaseChoice(charId);
+      setCharStyles(chars.find((char) => char.id == charId).name);
     } else {
-      target.classList.add("outline-2", "outline-red-100", "animate-shake");
-      setTimeout((target) => {
-        console.log(target);
-        target.classList.remove(
-          "outline-2",
-          "outline-red-100",
-          "animate-shake",
-        );
-      }, 1000);
+      target.classList.add("outline-2", "outline-red", "animate-shake");
     }
   };
 
@@ -52,7 +48,7 @@ export default function ShowChar({
   return (
     <div
       className={
-        className + "border flex flex-col gap-2 p-4 rounded-xs bg-white"
+        className + "border flex flex-col gap-2 p-4 rounded-xl bg-light"
       }
       style={{
         position: "fixed",
@@ -62,11 +58,13 @@ export default function ShowChar({
     >
       {chars.map((char) => (
         <div
-          className="flex gap-5 p-2 cursor-pointer hover:outline-2"
+          key={char.id}
+          className={`${styles[char.name].box} flex gap-5 justify-between p-2 cursor-pointer rounded-xl hover:outline-2 hover:outline-yellow`}
           onClick={(e) => clickHandler(e, char.id)}
         >
           <img className="w-6.25" src={char.img} alt="" />
           <p>{char.name}</p>
+          <Check className={`${styles[char.name].check}`} />
         </div>
       ))}
     </div>

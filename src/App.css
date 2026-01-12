@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
 @theme {
+  --color-green: #4ecdc4;
+  --color-light: #f7fff7;
+  --color-red: #ff6b6b;
+  --color-dg: #1a535c;
+  --color-yellow: #ffe66d;
+
+  --ease-in-expo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+
+  --font-tiny: "Tiny5";
+  --font-jersey: "Jersey 20";
+
   --animate-shake: shake 1s ease-in-out 2;
   @keyframes shake {
     0% {
