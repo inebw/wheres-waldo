@@ -10,11 +10,11 @@ const routes = [
     element: <App />,
     children: [
       {
-        index: true,
+        path: "start/:id",
         element: <Start />,
       },
       {
-        path: "select",
+        index: true,
         element: <Choose />,
       },
       {

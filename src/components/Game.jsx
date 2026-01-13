@@ -18,13 +18,12 @@ export default function Game() {
   const { cords } = useFetchCords(id);
   const [won, setWon] = useState(false);
   const [correctChoice, setCorrectChoice] = useState(0);
-  const [usedChars, setUsedChars] = useState(new Set());
   const [pos, setPos] = useState([0, 0]);
   const [sel, setSel] = useState([0, 0]);
   const [charClass, setCharClass] = useState("hidden");
   const imgRef = useRef(null);
   const [username, setUsername] = useOutletContext();
-  const { styles, setCharStyles } = useCharStyles();
+  const { styles, setCharStyles, resetCharStyles } = useCharStyles();
   const [scoreId, setScoreId] = useState(null);
 
   const {
@@ -46,6 +45,14 @@ export default function Game() {
     }
   }, [correctChoice]);
 
+  const resetGame = () => {
+    setWon(false);
+    setCorrectChoice(0);
+    reset();
+    resetCharStyles();
+    setCharClass("hidden");
+  };
+
   const postScore = async () => {
     const data = {
       username: username,
@@ -66,10 +73,6 @@ export default function Game() {
   };
 
   const increaseChoice = (charId) => {
-    if (usedChars.has(charId)) return;
-    const prevUsedChars = new Set(usedChars);
-    prevUsedChars.add(charId);
-    setUsedChars(prevUsedChars);
     setCorrectChoice((prev) => prev + 1);
   };
 
@@ -121,7 +124,13 @@ export default function Game() {
   if (error) return <p>{error.message}</p>;
 
   if (won)
-    return <>{scoreId && <TopScores scoreId={scoreId} settingId={id} />}</>;
+    return (
+      <>
+        {scoreId && (
+          <TopScores scoreId={scoreId} settingId={id} resetGame={resetGame} />
+        )}
+      </>
+    );
 
   return (
     <div>

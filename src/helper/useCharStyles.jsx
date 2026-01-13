@@ -4,35 +4,35 @@ export default function useCharStyles() {
   const [styles, setStles] = useState({
     Waldo: {
       check: "hidden",
-      wrong: "hidden",
+      wrong: "",
       box: "",
       status: "Not Found",
       statusClass: "",
     },
     Wenda: {
       check: "hidden",
-      wrong: "hidden",
+      wrong: "",
       box: "",
       status: "Not Found",
       statusClass: "",
     },
     Wizard: {
       check: "hidden",
-      wrong: "hidden",
+      wrong: "",
       box: "",
       status: "Not Found",
       statusClass: "",
     },
     Odlaw: {
       check: "hidden",
-      wrong: "hidden",
+      wrong: "",
       box: "",
       status: "Not Found",
       statusClass: "",
     },
     Woof: {
       check: "hidden",
-      wrong: "hidden",
+      wrong: "",
       box: "",
       status: "Not Found",
       statusClass: "",
@@ -45,7 +45,7 @@ export default function useCharStyles() {
       [char]: {
         check: "",
         wrong: "hidden",
-        box: "opacity-50 outline-2 outline-green hover:outline-green",
+        box: "outline-2 outline-green hover:outline-green",
         status: "Found",
         statusClass: "bg-green text-light",
       },
@@ -53,5 +53,45 @@ export default function useCharStyles() {
     setStles(newStyle);
   };
 
-  return { styles, setCharStyles };
+  const resetCharStyles = () => {
+    setStles({
+      Waldo: {
+        check: "hidden",
+        wrong: "",
+        box: "",
+        status: "Not Found",
+        statusClass: "",
+      },
+      Wenda: {
+        check: "hidden",
+        wrong: "",
+        box: "",
+        status: "Not Found",
+        statusClass: "",
+      },
+      Wizard: {
+        check: "hidden",
+        wrong: "",
+        box: "",
+        status: "Not Found",
+        statusClass: "",
+      },
+      Odlaw: {
+        check: "hidden",
+        wrong: "",
+        box: "",
+        status: "Not Found",
+        statusClass: "",
+      },
+      Woof: {
+        check: "hidden",
+        wrong: "",
+        box: "",
+        status: "Not Found",
+        statusClass: "",
+      },
+    });
+  };
+
+  return { styles, setCharStyles, resetCharStyles };
 }

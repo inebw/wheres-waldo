@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Check from "../assets/Check";
+import Circle from "../assets/Circle";
 
 export default function ShowChar({
   increaseChoice,
@@ -11,15 +12,24 @@ export default function ShowChar({
   styles,
   setCharStyles,
 }) {
+  const [usedChars, setUsedChars] = useState(new Set());
   if (className == "hidden") return <div></div>;
 
   const clickHandler = (event, charId) => {
     const target = event.currentTarget;
+    if (usedChars.has(charId)) return;
     if (isChar(charId)) {
-      increaseChoice(charId);
-      setCharStyles(chars.find((char) => char.id == charId).name);
+      target.classList.add("animate-btn-rare-success");
+      setTimeout(() => {
+        const prevUsedChars = new Set(usedChars);
+        prevUsedChars.add(charId);
+        setUsedChars(prevUsedChars);
+        increaseChoice(charId);
+        setCharStyles(chars.find((char) => char.id == charId).name);
+      }, 420);
     } else {
-      target.classList.add("outline-2", "outline-red", "animate-shake");
+      target.classList.add("outline-2", "outline-red", "animate-btn-error");
+      target.lastChild.classList.add("opacity-100");
     }
   };
 
@@ -59,12 +69,13 @@ export default function ShowChar({
       {chars.map((char) => (
         <div
           key={char.id}
-          className={`${styles[char.name].box} flex gap-5 justify-between p-2 cursor-pointer rounded-xl hover:outline-2 hover:outline-yellow`}
+          className={`${styles[char.name].box} btn-3d flex gap-5 justify-between p-2 cursor-pointer rounded-xl `}
           onClick={(e) => clickHandler(e, char.id)}
         >
           <img className="w-6.25" src={char.img} alt="" />
           <p>{char.name}</p>
           <Check className={`${styles[char.name].check}`} />
+          <Circle className={`${styles[char.name].wrong}`} />
         </div>
       ))}
     </div>

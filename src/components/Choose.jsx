@@ -20,7 +20,7 @@ export default function Choose() {
           <div
             key={setting.id}
             className="transition-scale duration-150 ease-in overflow-hidden rounded shadow-lg hover:scale-110 cursor-pointer active:scale-100 "
-            onClick={() => navigate(`/game/${setting.id}`)}
+            onClick={() => navigate(`/start/${setting.id}`)}
           >
             <h3 className="text-3xl text-center p-2">
               {setting.name.charAt(0).toUpperCase()}
