@@ -1,6 +1,6 @@
 const Check = ({ className }) => (
   <svg
-    className={`w-5 fill-green ${className}`}
+    className={`w-[20px] fill-green ${className}`}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
   >

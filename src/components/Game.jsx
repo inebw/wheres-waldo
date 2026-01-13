@@ -9,6 +9,7 @@ import { useOutletContext, useParams } from "react-router";
 import CharBoard from "./CharBoard";
 import useCharStyles from "../helper/useCharStyles";
 import Clock from "../assets/Clock";
+import Loading from "./Loading";
 
 export default function Game() {
   const { id } = useParams();
@@ -89,8 +90,8 @@ export default function Game() {
     let xPos = event.clientX;
     let yPos = event.clientY;
 
-    const POPUP_WIDTH = 150;
-    const POPUP_HEIGHT = 250;
+    const POPUP_WIDTH = 200;
+    const POPUP_HEIGHT = 260;
     const MARGIN = 15;
 
     const viewportW = window.innerWidth;
@@ -115,11 +116,12 @@ export default function Game() {
     toggleCharClass();
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
 
   if (error) return <p>{error.message}</p>;
 
-  if (won) return <>{scoreId && <TopScores scoreId={scoreId} />}</>;
+  if (won)
+    return <>{scoreId && <TopScores scoreId={scoreId} settingId={id} />}</>;
 
   return (
     <div>

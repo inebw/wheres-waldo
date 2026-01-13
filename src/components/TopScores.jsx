@@ -1,9 +1,10 @@
-import { useEffect } from "react";
 import useFetchScores from "../helper/useFetchScores";
+import Loading from "./Loading";
 
-export default function TopScores({ scoreId }) {
-  const { loading, error, scores } = useFetchScores();
-  if (loading) return <p>Loadging...</p>;
+export default function TopScores({ scoreId, settingId }) {
+  const { loading, error, scores } = useFetchScores(settingId);
+
+  if (loading) return <Loading />;
 
   if (error) return <p>{error.message}</p>;
 

@@ -34,7 +34,7 @@ export default function Start() {
         />
       </label>
       <button
-        className="bg-yellow-500 hover:bg-yellow-400 font-bold text-2xl text-light py-2 px-4 border-b-4 border-yellow-700 hover:border-yellow-500 rounded"
+        className="bg-yellow-500 cursor-pointer hover:bg-yellow-400 font-bold text-2xl text-light py-2 px-4 border-b-4 border-yellow-700 hover:border-yellow-500 rounded"
         type="submit"
       >
         Start!
