@@ -11,7 +11,7 @@ export default function Choose() {
   if (error) return <p>{error.message}</p>;
 
   return (
-    <div className="ml-25 mr-25">
+    <div className="ml-25 mr-25 pb-5">
       <h2 className="shadow-lg rounded-md mb-9 select-none font-bold text-4xl text-center bg-yellow p-5 ">
         Select your level
       </h2>

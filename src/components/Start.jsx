@@ -33,6 +33,7 @@ export default function Start() {
         <button
           onClick={hideRules}
           className="hover:bg-gray-100 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          type="button"
         >
           Show Rules !
         </button>
